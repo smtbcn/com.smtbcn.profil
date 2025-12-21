@@ -44,7 +44,6 @@ yarn-error.*
 /ios
 /android
 /keystore
-/backend
 /android
 /mapping-backups
 /scripts
