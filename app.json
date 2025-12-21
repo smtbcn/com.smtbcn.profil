@@ -2,7 +2,7 @@
   "expo": {
     "name": "Samet BİÇEN",
     "slug": "smtbcn",
-    "version": "2025.13.0",
+    "version": "2025.13.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.smtbcn.profil",
-      "buildNumber": "25122102",
+      "buildNumber": "25122103",
       "icon": "./assets/icon.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -38,7 +38,7 @@
     },
     "android": {
       "package": "com.smtbcn.profil",
-      "versionCode": 25122102,
+      "versionCode": 25122103,
       "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -68,7 +68,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "16a439b7-0c03-41d6-8619-a856931e78a9"
+        "projectId": "f7b2a960-a5cb-4379-8a06-1ecfdcf9b60c"
       }
     }
   }
