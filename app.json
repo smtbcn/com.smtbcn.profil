@@ -1,33 +1,74 @@
 {
   "expo": {
-    "name": "expotest",
-    "slug": "expotest",
-    "version": "1.0.0",
+    "name": "Samet BİÇEN",
+    "slug": "smtbcn",
+    "version": "2025.13.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.smtbcn.profil",
+      "buildNumber": "25122102",
+      "icon": "./assets/icon.png",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false,
+          "NSExceptionDomains": {
+            "api.github.com": {
+              "NSExceptionAllowsInsecureHTTPLoads": false,
+              "NSIncludesSubdomains": true
+            },
+            "raw.githubusercontent.com": {
+              "NSExceptionAllowsInsecureHTTPLoads": false,
+              "NSIncludesSubdomains": true
+            }
+          }
+        }
+      }
     },
     "android": {
+      "package": "com.smtbcn.profil",
+      "versionCode": 25122102,
+      "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
-      "edgeToEdgeEnabled": true
+      "permissions": [
+        "INTERNET"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
+    "plugins": [
+      "expo-font",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
+          }
+        }
+      ],
+      "./plugins/withBuildConfig",
+      "expo-localization"
+    ],
     "extra": {
       "eas": {
-        "projectId": "9eb93fa5-d590-484b-ba96-05b03a1ec74f"
+        "projectId": "16a439b7-0c03-41d6-8619-a856931e78a9"
       }
     }
   }
