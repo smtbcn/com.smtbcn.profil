@@ -5,6 +5,9 @@ node_modules/
 
 # Expo
 .expo/
+.vscode/
+.idea/
+.agent
 dist/
 web-build/
 expo-env.d.ts
@@ -39,3 +42,13 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+/keystore
+/backend
+/android
+/mapping-backups
+/scripts
+
+# Google Play Store Keys
+google-service-account.json
+service_account.json
+*.keystore

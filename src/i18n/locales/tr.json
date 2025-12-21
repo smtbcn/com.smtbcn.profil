@@ -1,0 +1,30 @@
+{
+    "common": {
+        "about": "Hakkımda",
+        "projects": "Projeler",
+        "applications": "Uygulamalar",
+        "loading": "Yükleniyor...",
+        "error": "Bir hata oluştu"
+    },
+    "profile": {
+        "name": "Samet BİÇEN",
+        "title": "Full Stack Developer",
+        "status": "Şu An Ne Yapıyorum?",
+        "currentlyDeveloping": "Aktif Olarak Geliştiriliyor",
+        "skills": "Yetenekler ve Teknolojiler",
+        "aboutMe": "Daha Yakından Samet",
+        "contact": "Bana Ulaşın"
+    },
+    "projects": {
+        "title": "GitHub Projelerim",
+        "subtitle": "{{count}} proje",
+        "loading": "Projeler yükleniyor..."
+    },
+    "apps": {
+        "title": "Uygulamalarım",
+        "playStore": "Google Play Store",
+        "appStore": "App Store",
+        "playStoreDesc": "Android uygulamalarıma buradan ulaşabilirsiniz.",
+        "appStoreDesc": "iOS uygulamalarıma buradan ulaşabilirsiniz."
+    }
+}

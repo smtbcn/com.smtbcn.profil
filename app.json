@@ -38,7 +38,7 @@
     },
     "android": {
       "package": "com.smtbcn.profil",
-      "versionCode": 25122103,
+      "versionCode": 25122104,
       "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -68,7 +68,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "f7b2a960-a5cb-4379-8a06-1ecfdcf9b60c"
+        "projectId": "5517dfe7-6aaa-4cf8-8bd9-0732ca3e6e1c"
       }
     }
   }

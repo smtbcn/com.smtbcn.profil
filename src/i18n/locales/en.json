@@ -1,0 +1,30 @@
+{
+    "common": {
+        "about": "About Me",
+        "projects": "Projects",
+        "applications": "Apps",
+        "loading": "Loading...",
+        "error": "An error occurred"
+    },
+    "profile": {
+        "name": "Samet BİÇEN",
+        "title": "Full Stack Developer",
+        "status": "What Am I Doing Now?",
+        "currentlyDeveloping": "Currently Developing",
+        "skills": "Skills & Technologies",
+        "aboutMe": "A Closer Look at Samet",
+        "contact": "Contact Me"
+    },
+    "projects": {
+        "title": "My GitHub Projects",
+        "subtitle": "{{count}} projects",
+        "loading": "Loading projects..."
+    },
+    "apps": {
+        "title": "My Applications",
+        "playStore": "Google Play Store",
+        "appStore": "App Store",
+        "playStoreDesc": "You can find my Android apps here.",
+        "appStoreDesc": "You can find my iOS apps here."
+    }
+}

@@ -8,6 +8,7 @@ export const NavigationMenu = ({ activeTab, onTabChange, onScrollToAbout }) => {
   const tabs = [
     { id: 'about', label: 'Hakkımda' },
     { id: 'projects', label: 'Projeler' },
+    { id: 'applications', label: 'Uygulamalar' },
   ];
 
   const handleTabPress = (tabId) => {
@@ -20,8 +21,8 @@ export const NavigationMenu = ({ activeTab, onTabChange, onScrollToAbout }) => {
 
   return (
     <View style={[navigationMenuStyles.container, { backgroundColor: colors.background }]}>
-      <ScrollView 
-        horizontal 
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={navigationMenuStyles.scrollContent}
       >

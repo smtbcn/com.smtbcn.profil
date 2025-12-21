@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const socialButtonStyles = StyleSheet.create({
   container: {
-    marginVertical: 6,
+    // marginVertical removed to fix excessive spacing
   },
   button: {
     paddingVertical: 14,
