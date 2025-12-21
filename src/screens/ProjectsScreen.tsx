@@ -77,9 +77,9 @@ export const ProjectsScreen: React.FC = () => {
 
         {loading ? (
           <View style={projectsScreenStyles.reposContainer}>
-            <SkeletonItem height={110} />
-            <SkeletonItem height={110} />
-            <SkeletonItem height={110} />
+            {[1, 2, 3, 4, 5, 6].map((key) => (
+              <SkeletonItem key={key} height={110} />
+            ))}
           </View>
         ) : (
           <View style={projectsScreenStyles.reposContainer}>

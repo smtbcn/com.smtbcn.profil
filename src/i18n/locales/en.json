@@ -1,10 +1,12 @@
 {
     "common": {
         "about": "About Me",
+        "feed": "Feed",
         "projects": "Projects",
         "applications": "Apps",
         "loading": "Loading...",
-        "error": "An error occurred"
+        "error": "An error occurred",
+        "admin": "Admin Panel"
     },
     "profile": {
         "name": "Samet BİÇEN",
@@ -13,7 +15,9 @@
         "currentlyDeveloping": "Currently Developing",
         "skills": "Skills & Technologies",
         "aboutMe": "A Closer Look at Samet",
-        "contact": "Contact Me"
+        "contact": "Contact Me",
+        "timeline": "Timeline",
+        "noEvents": "No events yet."
     },
     "projects": {
         "title": "My GitHub Projects",

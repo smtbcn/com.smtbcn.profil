@@ -28,7 +28,8 @@ export const applicationsScreenStyles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 12,
         padding: 16,
-        marginBottom: 12,
+        borderRadius: 12,
+        padding: 16,
     },
     appCardPressed: {
         opacity: 0.7,

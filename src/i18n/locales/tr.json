@@ -1,10 +1,12 @@
 {
     "common": {
         "about": "Hakkımda",
+        "feed": "Akış",
         "projects": "Projeler",
         "applications": "Uygulamalar",
         "loading": "Yükleniyor...",
-        "error": "Bir hata oluştu"
+        "error": "Bir hata oluştu",
+        "admin": "Yönetici Paneli"
     },
     "profile": {
         "name": "Samet BİÇEN",
@@ -13,7 +15,9 @@
         "currentlyDeveloping": "Aktif Olarak Geliştiriliyor",
         "skills": "Yetenekler ve Teknolojiler",
         "aboutMe": "Daha Yakından Samet",
-        "contact": "Bana Ulaşın"
+        "contact": "Bana Ulaşın",
+        "timeline": "Zaman Tüneli",
+        "noEvents": "Henüz bir olay eklenmemiş."
     },
     "projects": {
         "title": "GitHub Projelerim",

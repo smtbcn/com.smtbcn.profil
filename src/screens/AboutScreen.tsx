@@ -60,8 +60,8 @@ export const AboutScreen: React.FC = () => {
                         source={{ uri: 'https://avatars.githubusercontent.com/u/75270742?v=4' }}
                         style={[styles.avatar, { borderColor: colors.border }]}
                     />
-                    <Text style={[styles.name, { color: colors.text }]}>Samet BİÇEN</Text>
-                    <Text style={[styles.title, { color: colors.textSecondary }]}>Full Stack Mobile Developer</Text>
+                    <Text style={[styles.name, { color: colors.text }]}>{t('profile.name')}</Text>
+                    <Text style={[styles.title, { color: colors.textSecondary }]}>{t('profile.title')}</Text>
                 </View>
 
                 <View style={styles.section}>

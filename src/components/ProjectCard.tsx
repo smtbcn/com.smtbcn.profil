@@ -20,27 +20,8 @@ interface ProjectCardProps {
     index: number;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ repo, onPress, index }) => {
+export const ProjectCard: React.FC<ProjectCardProps> = ({ repo, onPress }) => {
     const { colors, isDark } = useTheme();
-    const fadeAnim = useRef(new Animated.Value(0)).current;
-    const slideAnim = useRef(new Animated.Value(20)).current;
-
-    useEffect(() => {
-        Animated.parallel([
-            Animated.timing(fadeAnim, {
-                toValue: 1,
-                duration: 500,
-                delay: index * 100,
-                useNativeDriver: true,
-            }),
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 500,
-                delay: index * 100,
-                useNativeDriver: true,
-            }),
-        ]).start();
-    }, [index]);
 
     const getLanguageColor = (language: string) => {
         const langColors: { [key: string]: string } = {
@@ -62,72 +43,66 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ repo, onPress, index }
     };
 
     return (
-        <Animated.View
-            style={{
-                opacity: fadeAnim,
-                transform: [{ translateY: slideAnim }],
-            }}
-        >
-            <Pressable onPress={onPress}>
-                {({ pressed }) => (
-                    <View
-                        style={[
-                            projectsScreenStyles.repoCard,
-                            {
-                                backgroundColor: colors.card,
-                                borderColor: colors.border,
-                                elevation: 2,
-                                shadowColor: '#000',
-                                shadowOffset: { width: 0, height: 2 },
-                                shadowOpacity: 0.1,
-                                shadowRadius: 4,
-                            },
-                            pressed && projectsScreenStyles.repoCardPressed,
-                        ]}
-                    >
-                        <View style={projectsScreenStyles.repoHeader}>
-                            <FontAwesome name="github" size={20} color={colors.text as any} />
-                            <Text style={[projectsScreenStyles.repoName, { color: colors.text }]}>
-                                {repo.name}
-                            </Text>
-                        </View>
+        <Pressable onPress={onPress}>
+            {({ pressed }) => (
+                <View
+                    style={[
+                        projectsScreenStyles.repoCard,
+                        {
+                            backgroundColor: colors.card,
+                            borderColor: colors.border,
+                            elevation: 2,
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 4,
+                        },
+                        pressed && projectsScreenStyles.repoCardPressed,
+                    ]}
+                >
+                    <View style={projectsScreenStyles.repoHeader}>
+                        <FontAwesome name="github" size={20} color={colors.text as any} />
+                        <Text style={[projectsScreenStyles.repoName, { color: colors.text }]}>
+                            {repo.name}
+                        </Text>
+                    </View>
 
-                        {repo.description && (
-                            <Text
-                                numberOfLines={2}
-                                style={[projectsScreenStyles.repoDescription, { color: colors.textSecondary }]}
-                            >
-                                {repo.description}
-                            </Text>
+                    {repo.description && (
+                        <Text
+                            numberOfLines={2}
+                            style={[projectsScreenStyles.repoDescription, { color: colors.textSecondary }]}
+                        >
+                            {repo.description}
+                        </Text>
+                    )}
+
+                    <View style={projectsScreenStyles.repoFooter}>
+                        {repo.language && (
+                            <View style={projectsScreenStyles.repoInfo}>
+                                <View style={[projectsScreenStyles.languageDot, { backgroundColor: getLanguageColor(repo.language) }]} />
+                                <Text style={[projectsScreenStyles.repoInfoText, { color: colors.textSecondary }]}>
+                                    {repo.language}
+                                </Text>
+                            </View>
                         )}
 
-                        <View style={projectsScreenStyles.repoFooter}>
-                            {repo.language && (
-                                <View style={projectsScreenStyles.repoInfo}>
-                                    <View style={[projectsScreenStyles.languageDot, { backgroundColor: getLanguageColor(repo.language) }]} />
-                                    <Text style={[projectsScreenStyles.repoInfoText, { color: colors.textSecondary }]}>
-                                        {repo.language}
-                                    </Text>
-                                </View>
-                            )}
+                        <View style={projectsScreenStyles.repoInfo}>
+                            <FontAwesome name="star" size={12} color={colors.textSecondary as any} />
+                            <Text style={[projectsScreenStyles.repoInfoText, { color: colors.textSecondary }]}>
+                                {repo.stargazers_count}
+                            </Text>
+                        </View>
 
-                            <View style={projectsScreenStyles.repoInfo}>
-                                <FontAwesome name="star" size={12} color={colors.textSecondary as any} />
-                                <Text style={[projectsScreenStyles.repoInfoText, { color: colors.textSecondary }]}>
-                                    {repo.stargazers_count}
-                                </Text>
-                            </View>
-
-                            <View style={projectsScreenStyles.repoInfo}>
-                                <FontAwesome name="code-fork" size={12} color={colors.textSecondary as any} />
-                                <Text style={[projectsScreenStyles.repoInfoText, { color: colors.textSecondary }]}>
-                                    {repo.forks_count}
-                                </Text>
-                            </View>
+                        <View style={projectsScreenStyles.repoInfo}>
+                            <FontAwesome name="code-fork" size={12} color={colors.textSecondary as any} />
+                            <Text style={[projectsScreenStyles.repoInfoText, { color: colors.textSecondary }]}>
+                                {repo.forks_count}
+                            </Text>
                         </View>
                     </View>
-                )}
-            </Pressable>
-        </Animated.View>
+                </View>
+            )}
+        </Pressable>
+
     );
 };

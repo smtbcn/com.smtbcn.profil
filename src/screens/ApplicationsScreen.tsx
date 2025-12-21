@@ -79,8 +79,9 @@ export const ApplicationsScreen: React.FC = () => {
 
                 {loading ? (
                     <View style={applicationsScreenStyles.appsContainer}>
-                        <SkeletonItem height={90} />
-                        <SkeletonItem height={90} />
+                        {[1, 2, 3, 4, 5, 6].map((key) => (
+                            <SkeletonItem key={key} height={90} />
+                        ))}
                     </View>
                 ) : (
                     <View style={applicationsScreenStyles.appsContainer}>

@@ -6,10 +6,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../theme';
 import { Ionicons } from '@expo/vector-icons';
 import { ProfileService } from '../services/apiService';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { SkeletonItem } from '../components/SkeletonItem';
 import { TimelineItem } from '../components/TimelineItem';
 import { LanguageSelector } from '../components/LanguageSelector';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/AppNavigator';
 
 const LANGUAGE_KEY = 'user-language';
 
@@ -18,6 +20,7 @@ export const ProfileScreen: React.FC = () => {
   const { t, i18n } = useTranslation();
   const scrollViewRef = useRef<ScrollView>(null);
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [liveData, setLiveData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -28,7 +31,7 @@ export const ProfileScreen: React.FC = () => {
     const newCount = tapCount + 1;
     if (newCount >= 6) {
       setTapCount(0);
-      Linking.openURL('https://profil.milasoft.com.tr/backend/admin/login.php');
+      navigation.navigate('Admin');
     } else {
       setTapCount(newCount);
       // Reset count after 2 seconds of inactivity
@@ -135,7 +138,7 @@ export const ProfileScreen: React.FC = () => {
 
         {/* Timeline Section */}
         <View style={styles.timelineSection}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Zaman Tüneli</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('profile.timeline')}</Text>
           {loading ? (
             <View style={{ paddingVertical: 10 }}>
               <SkeletonItem height={100} width="100%" borderRadius={16} marginBottom={16} />
@@ -152,7 +155,7 @@ export const ProfileScreen: React.FC = () => {
             ))
           )}
           {!loading && (!liveData?.timeline || liveData.timeline.length === 0) && (
-            <Text style={{ color: colors.textSecondary, textAlign: 'center', marginTop: 20 }}>Henüz bir olay eklenmemiş.</Text>
+            <Text style={{ color: colors.textSecondary, textAlign: 'center', marginTop: 20 }}>{t('profile.noEvents')}</Text>
           )}
         </View>
       </ScrollView>
