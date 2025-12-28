@@ -1,25 +1,37 @@
 <?php
-session_start();
+require_once '../core/Session.php';
 require_once '../config/config.php';
 require_once '../core/Database.php';
+require_once '../core/Security.php';
 
-$db = Database::getInstance();
+// Already logged in?
+if (isset($_SESSION['admin_logged_in'])) {
+    header('Location: dashboard.php');
+    exit;
+}
 
-if (isset($_POST['login'])) {
-    $user = $_POST['username'] ?? '';
-    $pass = $_POST['password'] ?? '';
+$error = '';
 
-    $stmt = $db->prepare("SELECT * FROM admins WHERE username = ? LIMIT 1");
-    $stmt->execute([$user]);
-    $admin = $stmt->fetch();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
 
-    if ($admin && password_verify($pass, $admin['password'])) {
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_user'] = $admin['username'];
-        header('Location: dashboard.php');
-        exit;
-    } else {
-        $error = "Hatalı Giriş Bilgileri!";
+    if ($username && $password) {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM admins WHERE username = ? LIMIT 1");
+        $stmt->execute([$username]);
+        $admin = $stmt->fetch();
+
+        if ($admin && password_verify($password, $admin['password'])) {
+            session_regenerate_id(true);
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_id'] = $admin['id'];
+            $_SESSION['admin_username'] = $admin['username'];
+            header('Location: dashboard.php');
+            exit;
+        } else {
+            $error = 'Kullanıcı adı veya şifre hatalı!';
+        }
     }
 }
 ?>
@@ -29,213 +41,112 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş Yap - SMTBCN Admin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Giriş - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-main: #0d1117;
-            --bg-side: #161b22;
-            --border: #30363d;
-            --text-main: #c9d1d9;
-            --text-dim: #8b949e;
-            --accent: #238636;
-            --danger: #f85149;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background: var(--bg-main);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .brand {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .brand img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--accent);
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(35, 134, 54, 0.3);
-        }
-
-        .brand h2 {
-            margin: 0;
-            color: white;
-            font-size: 1.5rem;
-            letter-spacing: -0.5px;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #e4e4e7;
         }
 
         .login-box {
-            background: var(--bg-side);
-            padding: 35px;
+            background: #151932;
+            border: 1px solid #2a2f4a;
             border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 24px;
         }
 
         .form-group {
             margin-bottom: 20px;
         }
 
-        .form-group label {
+        label {
             display: block;
             margin-bottom: 8px;
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-dim);
-            font-size: 1rem;
+            font-size: 14px;
+            color: #94a3b8;
         }
 
         input {
             width: 100%;
-            padding: 14px 14px 14px 45px;
-            background: var(--bg-main);
-            border: 1px solid var(--border);
+            padding: 12px;
+            background: #1a1f3a;
+            border: 1px solid #2a2f4a;
             border-radius: 8px;
-            color: white;
-            box-sizing: border-box;
-            outline: none;
-            font-size: 1rem;
-            transition: all 0.2s;
+            color: #e4e4e7;
+            font-size: 15px;
         }
 
         input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.15);
+            outline: none;
+            border-color: #3b82f6;
         }
 
-        .btn-login {
+        .btn {
             width: 100%;
-            padding: 15px;
-            background: var(--accent);
+            padding: 14px;
+            background: #3b82f6;
             color: white;
             border: none;
             border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: all 0.2s;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
-        .btn-login:hover {
-            background: #2ea043;
-            transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn-login:active {
-            transform: translateY(0);
-        }
-
-        .error-msg {
-            background: rgba(248, 81, 73, 0.1);
-            color: var(--danger);
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
             padding: 12px;
             border-radius: 8px;
-            border: 1px solid rgba(248, 81, 73, 0.2);
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer {
+            margin-bottom: 20px;
             text-align: center;
-            margin-top: 30px;
-            color: var(--text-dim);
-            font-size: 0.85rem;
-        }
-
-        /* Mobile specific adjustments */
-        @media (max-width: 480px) {
-            .login-box {
-                padding: 25px 20px;
-            }
-            .brand img {
-                width: 70px;
-                height: 70px;
-            }
         }
     </style>
 </head>
 
 <body>
-    <div class="login-container">
-        <div class="brand">
-            <img src="https://avatars.githubusercontent.com/u/75270742?v=4" alt="Avatar">
-            <h2>SMTBCN Panel</h2>
-        </div>
+    <div class="login-box">
+        <h1>🔐 Admin Girişi</h1>
 
-        <div class="login-box">
-            <?php if (isset($error)): ?>
-                <div class="error-msg">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <?php echo $error; ?>
-                </div>
-            <?php endif; ?>
+        <?php if ($error): ?>
+            <div class="error"><?php echo $error; ?></div>
+        <?php endif; ?>
 
-            <form method="POST">
-                <div class="form-group">
-                    <label>Kullanıcı Adı</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="username" placeholder="Kullanıcı adınız..." required autocomplete="username">
-                    </div>
-                </div>
+        <form method="POST">
+            <div class="form-group">
+                <label>Kullanıcı Adı</label>
+                <input type="text" name="username" required autofocus>
+            </div>
 
-                <div class="form-group">
-                    <label>Şifre</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Şifreniz..." required autocomplete="current-password">
-                    </div>
-                </div>
+            <div class="form-group">
+                <label>Şifre</label>
+                <input type="password" name="password" required>
+            </div>
 
-                <button type="submit" name="login" class="btn-login">
-                    Giriş Yap <i class="fas fa-arrow-right" style="margin-left: 10px; font-size: 0.9rem;"></i>
-                </button>
-            </form>
-        </div>
-
-        <div class="footer">
-            &copy; 2025 SMTBCN | Tüm Hakları Saklıdır.
-        </div>
+            <button type="submit" class="btn">Giriş Yap</button>
+        </form>
     </div>
 </body>
 

@@ -2,34 +2,31 @@
 class Database
 {
     private static $instance = null;
-    private $conn;
+    private $pdo;
 
     private function __construct()
     {
         try {
-            $this->conn = new PDO(
+            $this->pdo = new PDO(
                 "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
                 DB_USER,
                 DB_PASS,
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES => false,
+                    PDO::ATTR_EMULATE_PREPARES => false
                 ]
             );
         } catch (PDOException $e) {
-            header('Content-Type: application/json', true, 500);
-            echo json_encode(['error' => 'Database Connection Failed']);
-            exit;
+            die("Database connection failed: " . $e->getMessage());
         }
     }
 
     public static function getInstance()
     {
-        if (!self::$instance) {
-            self::$instance = new Database();
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
-        return self::$instance->conn;
+        return self::$instance->pdo;
     }
 }
-?>

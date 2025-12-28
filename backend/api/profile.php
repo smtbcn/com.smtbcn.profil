@@ -4,46 +4,43 @@ require_once '../core/Database.php';
 
 header('Content-Type: application/json');
 
+// API Key Check
 if (!isset($_SERVER['HTTP_X_API_KEY']) || $_SERVER['HTTP_X_API_KEY'] !== API_KEY) {
-    http_response_code(403);
-    echo json_encode(['error' => 'Unauthorized Access']);
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
     exit;
 }
 
 try {
     $db = Database::getInstance();
 
-    // 1. Profil, Durum ve Hakkımda Bilgisi
-    $stmtStatus = $db->query("SELECT * FROM profile_status ORDER BY id DESC LIMIT 1");
-    $statusData = $stmtStatus->fetch();
+    // Get Status
+    $stmt = $db->query("SELECT * FROM profile_status LIMIT 1");
+    $status = $stmt->fetch();
 
-    // 2. Yetenekleri Çek
-    $stmtSkills = $db->query("SELECT name, color, icon FROM skills WHERE is_active = 1 ORDER BY sort_order ASC");
-    $skillsData = $stmtSkills->fetchAll();
+    // Get Skills
+    $stmt = $db->query("SELECT * FROM skills WHERE is_active = 1 ORDER BY sort_order ASC");
+    $skills = $stmt->fetchAll();
 
-    // 3. Zaman Tünelini Çek
-    $stmtTimeline = $db->query("SELECT * FROM timeline ORDER BY sort_order ASC, id DESC");
-    $timelineData = $stmtTimeline->fetchAll();
+    // Get Timeline
+    $stmt = $db->query("SELECT * FROM timeline WHERE is_active = 1 ORDER BY sort_order ASC");
+    $timeline = $stmt->fetchAll();
 
-    // Yanıtı Oluştur
-    $response = [
-        'status' => $statusData['status_key'] ?? 'online',
+    echo json_encode([
+        'status' => $status['status_key'] ?? 'offline',
         'current_activity' => [
-            'tr' => $statusData['activity_tr'] ?? 'Geliştiriliyor...',
-            'en' => $statusData['activity_en'] ?? 'Developing...'
+            'tr' => $status['activity_tr'] ?? '',
+            'en' => $status['activity_en'] ?? ''
         ],
         'about' => [
-            'tr' => $statusData['about_tr'] ?? '',
-            'en' => $statusData['about_en'] ?? ''
+            'tr' => $status['about_tr'] ?? '',
+            'en' => $status['about_en'] ?? ''
         ],
-        'skills' => $skillsData ?: [],
-        'timeline' => $timelineData ?: []
-    ];
-
-    echo json_encode($response);
+        'skills' => $skills,
+        'timeline' => $timeline
+    ]);
 
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['error' => 'Internal Server Error: ' . $e->getMessage()]);
+    echo json_encode(['error' => 'Server error']);
 }
-?>

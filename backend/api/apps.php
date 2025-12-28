@@ -4,9 +4,10 @@ require_once '../core/Database.php';
 
 header('Content-Type: application/json');
 
+// API Key Check
 if (!isset($_SERVER['HTTP_X_API_KEY']) || $_SERVER['HTTP_X_API_KEY'] !== API_KEY) {
-    http_response_code(403);
-    echo json_encode(['error' => 'Unauthorized Access']);
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
     exit;
 }
 
@@ -16,8 +17,8 @@ try {
     $apps = $stmt->fetchAll();
 
     echo json_encode($apps);
+
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['error' => $e->getMessage()]);
+    echo json_encode(['error' => 'Server error']);
 }
-?>

@@ -1,18 +1,11 @@
 {
   "cli": {
-    "version": ">= 16.27.0",
-    "appVersionSource": "local"
+    "version": ">= 13.2.0"
   },
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      },
-      "ios": {
-        "simulator": true
-      }
+      "distribution": "internal"
     },
     "preview": {
       "distribution": "internal",
@@ -21,25 +14,23 @@
       }
     },
     "production": {
-      "autoIncrement": true,
+      "ios": {
+        "simulator": false,
+        "buildConfiguration": "Release"
+      },
       "android": {
         "buildType": "app-bundle"
-      },
-      "ios": {
-        "buildConfiguration": "Release"
       }
     }
   },
   "submit": {
     "production": {
-      "android": {
-        "serviceAccountKeyPath": "./google-service-account.json",
-        "track": "internal"
-      },
       "ios": {
-        "appleId": "samet.bicen@icloud.com",
-        "ascAppId": "6755402852",
-        "appleTeamId": "6F974S63AX"
+        "appleId": "samet.bicen@icloud.com"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./service_account.json",
+        "track": "alpha"
       }
     }
   }
